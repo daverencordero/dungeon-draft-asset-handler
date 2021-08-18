@@ -43,7 +43,7 @@ class SnakeCaseRenamer:
 
 class DungeonDraftAssetHandler:
 
-    def __init__(self, tag_name = 'MyTag', enabled_relative_path = True, file_name = 'default', path = os.getcwd(), identity = '/**/*.png'):
+    def __init__(self, tag_name = 'MyTag', enabled_relative_path = False, prepend_text = 'textures/objects/', file_name = 'default', path = os.getcwd(), identity = '/**/*.png'):
         self.enabled_relative_path = enabled_relative_path
         self.file_name = file_name
         self.files_names = self.get_file_names(path, identity) 
@@ -71,7 +71,7 @@ class DungeonDraftAssetHandler:
                 continue
 
             split_file_dir = os.path.split(file)
-            file_names.append(split_file_dir[1])
+            file_names.append(self.prepend_text + split_file_dir[1])
 
         return file_names
 
@@ -92,6 +92,7 @@ if __name__ == '__main__':
 
     my_parser.add_argument('-t', '--tag', default='MyTag', type=str, required=False, help='Tag name')
     my_parser.add_argument('-r', '--relativepath', default=True, type=str2bool, required=False, help='Enables relative path')
+    my_parser.add_argument('-p', '--prependtext', default='textures/objects/', type=str, required=False, help='Prepend file name text')
 
     args = my_parser.parse_args()
 
@@ -99,9 +100,10 @@ if __name__ == '__main__':
 
     tag_name = args.tag
     enabled_relative_path = args.relativepath
+    prepend_text = args.prependtext
 
     renamer = SnakeCaseRenamer()
     renamer.rename()
 
-    asset_handler = DungeonDraftAssetHandler(tag_name, enabled_relative_path)
+    asset_handler = DungeonDraftAssetHandler(tag_name, enabled_relative_path, prepend_text)
     asset_handler.write()
