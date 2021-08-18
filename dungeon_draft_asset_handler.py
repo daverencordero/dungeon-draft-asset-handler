@@ -43,7 +43,7 @@ class SnakeCaseRenamer:
 
 class DungeonDraftAssetHandler:
 
-    def __init__(self, tag_name = 'MyTag', enabled_relative_path = False, file_name = 'default', path = os.getcwd(), identity = '/**/*.png'):
+    def __init__(self, tag_name = 'MyTag', enabled_relative_path = True, file_name = 'default', path = os.getcwd(), identity = '/**/*.png'):
         self.enabled_relative_path = enabled_relative_path
         self.file_name = file_name
         self.files_names = self.get_file_names(path, identity) 
@@ -90,8 +90,8 @@ if __name__ == '__main__':
     # Create the parser
     my_parser = argparse.ArgumentParser(description='List the content of a folder', epilog='Paalam :(')
 
-    my_parser.add_argument('-t', '--tag', type=str, required=False, help='Tag name')
-    my_parser.add_argument('-r', '--relativepath', type=str2bool, required=False, help='Enables relative path')
+    my_parser.add_argument('-t', '--tag', default='MyTag', type=str, required=False, help='Tag name')
+    my_parser.add_argument('-r', '--relativepath', default=True, type=str2bool, required=False, help='Enables relative path')
 
     args = my_parser.parse_args()
 
